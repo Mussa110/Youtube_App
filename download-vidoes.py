@@ -2,6 +2,7 @@
 from yt_dlp import YoutubeDL
 import tkinter 
 import customtkinter as ct
+from tkinter import filedialog
 
 ct.set_appearance_mode('system')
 
@@ -12,9 +13,12 @@ app.geometry('700x400')
 
 def download_audio():
     link = enter1.get()
+    #selcete floder to download init 
+    folder= filedialog.askdirectory(title="where do you wanna save it !! ")
     with YoutubeDL({'extract_audio': True,
                             'format': 'bestaudio',
-                            'outtmpl': '%(title)s.mp3'}) as video:
+                            #put the var in outtml ny your way 
+                            'outtmpl': f'{folder}/%(title)s.mp3'}) as video:
         
 
         info_dict = video.extract_info(link, download = True)
@@ -38,9 +42,10 @@ def startdownload():
         return
     try:
         # Configuration for YoutubeDL
+        folder= filedialog.askdirectory(title="where do you wanna save it !! ")
         ydl_opts = {
             'format': 'best',
-            'outtmpl': '%(title)s.%(ext)s'
+            'outtmpl': f'{folder}/%(title)s.%(ext)s'
         }
         
         with YoutubeDL(ydl_opts) as yt_dlp_object:
